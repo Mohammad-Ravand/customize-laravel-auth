@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +16,41 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('create',function(){
+
+    return Inertia::render('Socket/Create',[]);
+});
+
+
+Route::post('broadcast',function(Request $request){
+   try{
+        // get event name
+        $channel = $request->input('channel');
+        $event_name = $request->input('event_name');
+        $event_data = $request->input('event_data');
+        
+
+        $eventClass = "App\\Events\\" . $event_name;
+        if (!class_exists($eventClass)) {
+            throw new Exception('evnet does not exist');
+        } 
+
+        //fire event
+        event(new $eventClass($event_data));
+        
+        return ['done'=>true];
+
+   }catch(Exception $e){
+        return ['done'=>false];
+   }
+
+
+});
+
+
+Route::get('show',function(){
+    return Inertia::render('Socket/Show',[]);
+});
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -26,11 +62,6 @@ Route::get('/', function () {
 });
 
 
-Route::get('create',function(){
-    return Inertia::render('Socket/create',[
-        
-    ]);
-});
 
 
 
