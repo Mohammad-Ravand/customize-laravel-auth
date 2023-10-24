@@ -2,13 +2,24 @@
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
+import SelectInput from '@/Components/SelectInput.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 
+import {computed} from 'vue';
+const props = defineProps({
+    roles:{
+        type:Array,
+        required:true
+    }
+});
+
 const form = useForm({
-    name: '',
-    email: '',
+    firstName: '',
+    lastName: '',
+    mobile: '',
+    role: '',
     password: '',
     password_confirmation: '',
 });
@@ -18,6 +29,11 @@ const submit = () => {
         onFinish: () => form.reset('password', 'password_confirmation'),
     });
 };
+
+const roleOptions = computed(()=>{
+    return props.roles.map(role=>({label: role.name, value:role.id}))
+})
+
 </script>
 
 <template>
@@ -26,34 +42,70 @@ const submit = () => {
 
         <form @submit.prevent="submit">
             <div>
-                <InputLabel for="name" value="Name" />
+                <InputLabel for="firstName" value="firstName" />
 
                 <TextInput
-                    id="name"
+                    id="firstName"
                     type="text"
                     class="mt-1 block w-full"
-                    v-model="form.name"
+                    v-model="form.firstName"
                     required
                     autofocus
-                    autocomplete="name"
+                    autocomplete="firstName"
                 />
 
-                <InputError class="mt-2" :message="form.errors.name" />
+                <InputError class="mt-2" :message="form.errors.firstName" />
+            </div>
+
+            <div>
+                <InputLabel for="lastName" value="LastName" />
+
+                <TextInput
+                    id="lastName"
+                    type="text"
+                    class="mt-1 block w-full"
+                    v-model="form.lastName"
+                    required
+                    autofocus
+                    autocomplete="lastName"
+                />
+
+                <InputError class="mt-2" :message="form.errors.lastName" />
             </div>
 
             <div class="mt-4">
-                <InputLabel for="email" value="Email" />
+                <InputLabel for="mobile" value="mobile" />
 
                 <TextInput
-                    id="email"
-                    type="email"
+                    id="mobile"
+                    type="number"
                     class="mt-1 block w-full"
-                    v-model="form.email"
+                    v-model="form.mobile"
                     required
                     autocomplete="username"
                 />
 
-                <InputError class="mt-2" :message="form.errors.email" />
+                <InputError class="mt-2" :message="form.errors.mobile" />
+            </div>
+
+            <div class="mt-4">
+                <InputLabel for="email" value="Select Role" />
+
+                <SelectInput
+                    id="email"
+                    as="select"
+                    class="mt-1 block w-full"
+                    v-model="form.role"
+                    :options="roleOptions"
+                    required
+                    autocomplete="username"
+                >
+                <template #selected>
+                    <option value="" >select role</option>
+                </template>
+                </SelectInput>
+
+                <InputError class="mt-2" :message="form.errors.role" />
             </div>
 
             <div class="mt-4">

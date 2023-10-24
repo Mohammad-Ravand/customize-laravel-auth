@@ -7,7 +7,7 @@ import TextInput from '@/Components/TextInput.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 
 const props = defineProps({
-    email: {
+    mobile: {
         type: String,
         required: true,
     },
@@ -19,7 +19,7 @@ const props = defineProps({
 
 const form = useForm({
     token: props.token,
-    email: props.email,
+    mobile: props.mobile,
     password: '',
     password_confirmation: '',
 });
@@ -37,19 +37,19 @@ const submit = () => {
 
         <form @submit.prevent="submit">
             <div>
-                <InputLabel for="email" value="Email" />
+                <InputLabel for="mobile" value="Mobile" />
 
                 <TextInput
-                    id="email"
-                    type="email"
+                    id="mobile"
+                    type="mobile"
                     class="mt-1 block w-full"
-                    v-model="form.email"
+                    v-model="form.mobile"
                     required
                     autofocus
                     autocomplete="username"
                 />
 
-                <InputError class="mt-2" :message="form.errors.email" />
+                <InputError class="mt-2" :message="form.errors.mobile" />
             </div>
 
             <div class="mt-4">

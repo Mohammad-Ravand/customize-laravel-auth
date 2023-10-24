@@ -26,8 +26,8 @@ const submit = () => {
         <Head title="Forgot Password" />
 
         <div class="mb-4 text-sm text-gray-600">
-            Forgot your password? No problem. Just let us know your mobile address and we will mobile you a password reset
-            link that will allow you to choose a new one.
+            Forgot your password? No problem. Just let us know your mobile address and we will send you a new password
+            that will allow you to login.
         </div>
 
         <div v-if="status" class="mb-4 font-medium text-sm text-green-600">

@@ -17,7 +17,7 @@ defineProps({
 });
 
 const form = useForm({
-    email: '',
+    mobile: '',
     password: '',
     remember: false,
 });
@@ -39,19 +39,19 @@ const submit = () => {
 
         <form @submit.prevent="submit">
             <div>
-                <InputLabel for="email" value="Email" />
+                <InputLabel for="mobile" value="Mobile" />
 
                 <TextInput
-                    id="email"
-                    type="email"
+                    id="mobile"
+                    type="number"
                     class="mt-1 block w-full"
-                    v-model="form.email"
+                    v-model="form.mobile"
                     required
                     autofocus
                     autocomplete="username"
                 />
 
-                <InputError class="mt-2" :message="form.errors.email" />
+                <InputError class="mt-2" :message="form.errors.mobile" />
             </div>
 
             <div class="mt-4">
@@ -76,7 +76,12 @@ const submit = () => {
                 </label>
             </div>
 
-            <div class="flex items-center justify-end mt-4">
+            <div class="flex items-center justify-between  mt-4">
+
+                <Link  :href="route('register')" class="px-5 py-1 bg-sky-500 rounded-md text-white" >
+                    Register
+                </Link>
+
                 <Link
                     v-if="canResetPassword"
                     :href="route('password.request')"
@@ -84,7 +89,6 @@ const submit = () => {
                 >
                     Forgot your password?
                 </Link>
-
                 <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     Log in
                 </PrimaryButton>

@@ -5,7 +5,6 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,16 +27,16 @@ Route::post('broadcast',function(Request $request){
         $channel = $request->input('channel');
         $event_name = $request->input('event_name');
         $event_data = $request->input('event_data');
-        
+
 
         $eventClass = "App\\Events\\" . $event_name;
         if (!class_exists($eventClass)) {
             throw new Exception('evnet does not exist');
-        } 
+        }
 
         //fire event
         event(new $eventClass($event_data));
-        
+
         return ['done'=>true];
 
    }catch(Exception $e){
